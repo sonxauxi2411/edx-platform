@@ -5,6 +5,7 @@ Block Completion Transformer
 
 from completion.models import BlockCompletion
 from xblock.completable import XBlockCompletionMode as CompletionMode
+from lms.djangoapps.courseware.models import StudentModule
 
 from openedx.core.djangoapps.content.block_structure.transformer import BlockStructureTransformer
 
@@ -81,6 +82,12 @@ class BlockCompletionTransformer(BlockStructureTransformer):
         :param block_structure: A BlockStructureBlockData object
         """
         if block_key in complete_course_blocks:
+            key = str(block_key)
+
+            if 'problem' in key:
+                if not StudentModule.get_score_done(block_key=key, user_id=usage_info.user.id):
+                    return
+
             block_structure.override_xblock_field(block_key, self.COMPLETE, True)
 
             complete_time = self._get_complete_time_leaf_block(block_key, usage_info)
