@@ -29,6 +29,7 @@ from rest_framework.views import APIView
 
 from openedx_events.learning.data import UserData, UserPersonalData
 from openedx_events.learning.signals import SESSION_LOGIN_COMPLETED
+from openedx_filters.learning.filters import StudentLoginRequested
 
 from common.djangoapps import third_party_auth
 from common.djangoapps.edxmako.shortcuts import render_to_response
@@ -564,6 +565,13 @@ def login_user(request, api_version='v1'):
 
         possibly_authenticated_user = user
 
+        try:
+            possibly_authenticated_user = StudentLoginRequested.run_filter(user=possibly_authenticated_user)
+        except StudentLoginRequested.PreventLogin as exc:
+            raise AuthFailedError(
+                str(exc), redirect_url=exc.redirect_to, error_code=exc.error_code, context=exc.context,
+            ) from exc
+
         if not is_user_third_party_authenticated:
             possibly_authenticated_user = _authenticate_first_party(request, user, third_party_auth_requested)
             if possibly_authenticated_user and password_policy_compliance.should_enforce_compliance_on_login():
@@ -605,7 +613,7 @@ def login_user(request, api_version='v1'):
         set_custom_attribute('login_user_auth_failed_error', False)
         set_custom_attribute('login_user_response_status', response.status_code)
         set_custom_attribute('login_user_redirect_url', redirect_url)
-        mark_user_change_as_expected(response, user.id)
+        mark_user_change_as_expected(user.id)
         return response
     except AuthFailedError as error:
         response_content = error.get_response()

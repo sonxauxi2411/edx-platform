@@ -141,7 +141,8 @@ AVAILABLE_PROVIDER_MAP = {
             contact_email='',
         )._asdict(),
         'messages': [],
-        'has_full_support': True
+        'has_full_support': True,
+        'admin_only_config': False,
     },
     Provider.OPEN_EDX: {
         'features': [
@@ -169,7 +170,7 @@ AVAILABLE_PROVIDER_MAP = {
         'messages': [],
         'has_full_support': True,
         'supports_in_context_discussions': True,
-        'visible': False,
+        'admin_only_config': False,
     },
     Provider.ED_DISCUSS: {
         'features': [
@@ -196,7 +197,8 @@ AVAILABLE_PROVIDER_MAP = {
             contact_email='',
         )._asdict(),
         'messages': [pii_sharing_required_message('Ed Discussion')],
-        'has_full_support': False
+        'has_full_support': False,
+        'admin_only_config': True,
     },
     Provider.INSCRIBE: {
         'features': [
@@ -224,7 +226,8 @@ AVAILABLE_PROVIDER_MAP = {
             contact_email='',
         )._asdict(),
         'messages': [pii_sharing_required_message('InScribe')],
-        'has_full_support': False
+        'has_full_support': False,
+        'admin_only_config': True,
     },
     Provider.PIAZZA: {
         'features': [
@@ -248,7 +251,8 @@ AVAILABLE_PROVIDER_MAP = {
             contact_email='team@piazza.com',
         )._asdict(),
         'messages': [],
-        'has_full_support': False
+        'has_full_support': False,
+        'admin_only_config': True
     },
     Provider.YELLOWDIG: {
         'features': [
@@ -605,6 +609,10 @@ class DiscussionTopicLink(models.Model):
     enabled_in_context = models.BooleanField(
         default=True,
         help_text=_("Whether this topic should be shown in-context in the course.")
+    )
+    ordering = models.PositiveIntegerField(
+        null=True,
+        help_text=_("Ordering of this topic in its learning context"),
     )
 
     def __str__(self):
