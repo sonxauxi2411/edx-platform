@@ -153,7 +153,9 @@ ELASTIC_SEARCH_CONFIG = [
 
 
 ################################ COURSE DISCUSSIONS ###########################
-FEATURES['ENABLE_DISCUSSION_SERVICE'] = True
+FEATURES['ENABLE_DISCUSSION_SERVICE'] = False
+FEATURES['ENABLE_DISCUSSION_HOME_PANEL'] = False
+FEATURES['WIKI_ENABLED'] = False
 
 ################################ CREDENTIALS ###########################
 CREDENTIALS_SERVICE_USERNAME = 'credentials_worker'

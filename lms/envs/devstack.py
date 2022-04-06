@@ -356,7 +356,9 @@ DISCUSSIONS_MICROFRONTEND_URL = 'http://localhost:2002'
 
 FEATURES.update({
     'AUTOMATIC_AUTH_FOR_TESTING': True,
-    'ENABLE_DISCUSSION_SERVICE': True,
+    'ENABLE_DISCUSSION_SERVICE': False,
+    'ENABLE_DISCUSSION_HOME_PANEL': False,
+    'WIKI_ENABLED': False,
     'SHOW_HEADER_LANGUAGE_SELECTOR': True,
 
     # Enable enterprise integration by default.
