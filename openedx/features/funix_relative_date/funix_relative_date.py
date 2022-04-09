@@ -24,6 +24,10 @@ class FunixRelativeDateLibary():
 		date_blocks = list(date_blocks)
 		date_blocks.sort(key=lambda x: x.index)
 
+		# Check if date_blocks is empty
+		if len(date_blocks) == 0:
+			return []
+
 		# Add start date
 		start_date = date_blocks.pop(0)
 		output = [
@@ -76,7 +80,7 @@ class FunixRelativeDateLibary():
 		if assignment_blocks is None:
 			assignment_blocks = courseware_courses.funix_get_assginment_date_blocks(course=course, user=user, request=None, include_past_dates=True)
 
-		last_complete_date = FunixRelativeDateDAO.get_enroll_by_id(user_id=user.id, course_id=course_id).date
+		last_complete_date = FunixRelativeDateDAO.get_enroll_date_by_id(user_id=user.id, course_id=course_id)
 		if last_complete_date is None:
 			last_complete_date = date.today()
 
