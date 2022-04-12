@@ -10,6 +10,7 @@ from django.core.files.storage import get_storage_class
 from xblock.fields import List
 
 from edx_django_utils.plugins import PluginError
+from django.conf import settings
 
 log = logging.getLogger("edx.courseware")
 
@@ -307,7 +308,9 @@ class StaticTab(CourseTab):
     def __init__(self, tab_dict=None, name=None, url_slug=None):
         def link_func(course, reverse_func):
             """ Returns a function that returns the static tab's URL. """
-            return reverse_func(self.type, args=[str(course.id), self.url_slug])
+            # return reverse_func(self.type, args=[str(course.id), self.url_slug])
+            mfe_link = f'{settings.LEARNING_MICROFRONTEND_URL}/course/{str(course.id)}/static/{self.url_slug}'
+            return mfe_link
 
         self.url_slug = tab_dict.get('url_slug') if tab_dict else url_slug
 
