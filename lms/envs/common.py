@@ -3203,6 +3203,9 @@ INSTALLED_APPS = [
 
     # TODO (EventBus): Make Kafka/event-bus optional
     'openedx.core.djangoapps.kafka_consumer',
+
+    # FUNiX Feedback
+    'lms.djangoapps.feedback',
 ]
 
 ######################### CSRF #########################################
