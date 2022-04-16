@@ -6,6 +6,8 @@ from config_models.views import ConfigurationModelCurrentAPIView
 from django.conf import settings
 from django.urls import include, re_path
 from django.conf.urls.static import static
+from django.conf.urls import url
+
 from django.contrib.admin import autodiscover as django_autodiscover
 from django.urls import path
 from django.utils.translation import gettext_lazy as _
@@ -53,6 +55,7 @@ from openedx.core.djangoapps.verified_track_content import views as verified_tra
 from openedx.features.enterprise_support.api import enterprise_enabled
 from common.djangoapps.student import views as student_views
 from common.djangoapps.util import views as util_views
+from lms.djangoapps.feedback import views as feedback_views
 
 RESET_COURSE_DEADLINES_NAME = 'reset_course_deadlines'
 RENDER_XBLOCK_NAME = 'render_xblock'
@@ -1041,4 +1044,9 @@ if settings.ENABLE_SAVE_FOR_LATER:
 # Enhanced Staff Grader (ESG) URLs
 urlpatterns += [
     path('api/ora_staff_grader/', include('lms.djangoapps.ora_staff_grader.urls', 'ora-staff-grader')),
+]
+
+# FUNiX Feedback
+urlpatterns += [
+    url(r'^feedback/$', feedback_views.index, name='feedback_index')
 ]
