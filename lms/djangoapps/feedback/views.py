@@ -45,6 +45,5 @@ def index(request):
         else:
             return HttpResponse(form.errors)
             #print(form.errors)
-        
     template = loader.get_template('feedback_form.html')
-    return HttpResponse(template.render({}, request))
+    return HttpResponse(template.render({ 'email': request.user.email  }, request))
