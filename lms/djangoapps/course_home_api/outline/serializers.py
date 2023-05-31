@@ -27,7 +27,7 @@ class CourseBlockSerializer(serializers.Serializer):
         icon = None
         num_graded_problems = block.get('num_graded_problems', 0)
         scored = block.get('scored')
-
+        print('1')
         if num_graded_problems and block_type == 'sequential':
             questions = ngettext('({number} Question)', '({number} Questions)', num_graded_problems)
             display_name += ' ' + questions.format(number=num_graded_problems)
