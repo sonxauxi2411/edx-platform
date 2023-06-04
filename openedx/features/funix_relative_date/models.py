@@ -28,10 +28,7 @@ class FunixRelativeDateDAO():
 
     @classmethod
     def get_all_block_by_id(self, user_id, course_id):
-        print('-----------get_all_block_by_id:',FunixRelativeDate.objects.filter(
-            user_id=user_id,
-            course_id=course_id
-        ) )
+
         return FunixRelativeDate.objects.filter(
             user_id=user_id,
             course_id=course_id
