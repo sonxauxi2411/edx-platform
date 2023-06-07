@@ -105,7 +105,8 @@ class FunixRelativeDatesTabView(RetrieveAPIView):
 		context = self.get_serializer_context()
 		context['learner_is_full_access'] = learner_is_full_access
 		serializer = self.get_serializer_class()(data, context=context)
-		print('student----------', student_id)
-		print('request.user.id-------------:', request.user.id)
+
+
+		print('')
 		mark_user_change_as_expected(request.user.id)
 		return Response(serializer.data)
