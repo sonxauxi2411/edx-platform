@@ -41,6 +41,7 @@ from .mako_module import MakoTemplateBlockBase
 from .progress import Progress
 from .x_module import AUTHOR_VIEW, PUBLIC_VIEW, STUDENT_VIEW
 from .xml_module import XmlMixin
+from lms.djangoapps.courseware.models import StudentModule
 
 
 log = logging.getLogger(__name__)
@@ -768,6 +769,17 @@ class SequenceBlock(
         """
         # Avoid circular imports.
         from openedx.core.lib.xblock_utils import get_icon
+        
+        def get_problem_child_id(item):
+            child_items = item.get_children()
+
+            for el in child_items:
+                block_id = el.scope_ids.usage_id
+
+                if 'problem' in str(block_id):
+                    return block_id
+
+            return None
 
         render_items = not context.get('exclude_units', False)
         is_user_authenticated = self.is_user_authenticated(context)
@@ -828,7 +840,12 @@ class SequenceBlock(
                 iteminfo['href'] = context.get('item_url', '').format(usage_key=usage_id)
             if is_user_authenticated:
                 if item.location.block_type == 'vertical' and completion_service:
-                    iteminfo['complete'] = completion_service.vertical_is_complete(item)
+                    child_problem = get_problem_child_id(item)
+                    
+                    if child_problem is not None:
+                        iteminfo['complete'] = StudentModule.get_score_done(block_key=child_problem, user_id=user.opt_attrs.get('edx-platform.user_id'))
+                    else:
+                        iteminfo['complete'] = completion_service.vertical_is_complete(item)
 
             contents.append(iteminfo)
 
