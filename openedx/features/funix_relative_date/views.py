@@ -14,7 +14,7 @@ from rest_framework.response import Response
 from common.djangoapps.student.models import CourseEnrollment
 
 
-
+from openedx.core.djangoapps.safe_sessions.middleware import mark_user_change_as_expected
 from lms.djangoapps.courseware.access import has_access
 from lms.djangoapps.courseware.context_processor import user_timezone_locale_prefs
 from lms.djangoapps.courseware.courses import  get_course_with_access
@@ -105,5 +105,7 @@ class FunixRelativeDatesTabView(RetrieveAPIView):
 		context = self.get_serializer_context()
 		context['learner_is_full_access'] = learner_is_full_access
 		serializer = self.get_serializer_class()(data, context=context)
-
+		print('student----------', student_id)
+		print('request.user.id-------------:', request.user.id)
+		mark_user_change_as_expected(request.user.id)
 		return Response(serializer.data)
