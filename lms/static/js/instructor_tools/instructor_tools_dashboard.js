@@ -7,8 +7,35 @@
 	$(document).ready(function() {
 		const $gradeReportDownload = $('.grade-report-download');
 		$gradeReportDownload.click(function(e) {
+            Swal.fire({
+				title: 'Generating...',
+				html: 'Generating all grade csv file!',
+				allowOutsideClick: false,
+				didOpen: () => {
+					Swal.showLoading()
+				},
+			});
+
 			$.post(GradeAPI, (res) => {
-				console.log(res)
+                const {
+					output
+				} = res;
+				if (output) {
+					// Get file name from output path
+					const fileName = output.split('/').pop();
+
+					// Go to link in new tab
+					window.open('http://localhost:18000/media/' + fileName, '_blank');
+				} else {
+					Swal.fire({
+					title: 'Error',
+					text: 'Something went wrong!',
+					icon: 'error',
+					});
+				}
+
+				// Close the Swal
+				Swal.close();
 			})
 		})
     });
