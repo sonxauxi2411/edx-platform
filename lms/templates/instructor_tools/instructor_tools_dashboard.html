@@ -1,5 +1,6 @@
 <%page expression_filter="h"/>
 <%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
 <%def name="online_help_token()"><% return "instructor_tools_dashboard" %></%def>
 
 <%!
@@ -7,7 +8,11 @@
 %>
 
 <%block name="headextra">
-  <link rel="stylesheet" href="/static/css/lms-course.css">
+<%static:css group='style-course-vendor'/>
+<%static:css group='style-vendor-tinymce-content'/>
+<%static:css group='style-vendor-tinymce-skin'/>
+<%static:css group='style-course'/>
+<script type="text/javascript" src="${static.url('js/instructor_tools/instructor_tools_dashboard.js')}"></script>
 </%block>
 
 <main id="main" aria-label="Content" tabindex="-1">
@@ -21,7 +26,9 @@
                 <hr>
                 <h3 class="hd hd-3">Export all grades</h3>
                 <p></p>
-                <p><input type="button" name="list-profiles-csv" value="Export all student's grade as CSV" data-csv="true"></p>
+                <p>
+                    <input type="button" name="all-grades-csv" value="Export all student's grade as CSV" data-csv="true" class="grade-report-download">
+                </p>
               </div>
 
             </section>
