@@ -753,6 +753,7 @@ class EnrollStaffView(View):
 
     @method_decorator(require_global_staff)
     @method_decorator(ensure_valid_course_key)
+    @method_decorator(xframe_options_exempt)
     def get(self, request, course_id):
         """
         Display enroll staff view to global staff user with `Enroll` and `Don't Enroll` options.
