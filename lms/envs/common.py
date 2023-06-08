@@ -3250,6 +3250,9 @@ INSTALLED_APPS = [
     # For save for later
     'lms.djangoapps.save_for_later',
 
+    # instructor_tools
+    'lms.djangoapps.instructor_tools'
+
     # Blockstore
     'blockstore.apps.bundles',
 
