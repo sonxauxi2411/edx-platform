@@ -109,10 +109,11 @@ DEBUG_TOOLBAR_CONFIG = {
 
 def should_show_debug_toolbar(request):  # lint-amnesty, pylint: disable=missing-function-docstring
     # We always want the toolbar on devstack unless running tests from another Docker container
-    hostname = request.get_host()
-    if hostname.startswith('edx.devstack.lms:') or hostname.startswith('lms.devstack.edx:'):
-        return False
-    return True
+    # hostname = request.get_host()
+    # if hostname.startswith('edx.devstack.lms:') or hostname.startswith('lms.devstack.edx:'):
+    #     return False
+    # return True
+    return False
 
 ########################### PIPELINE #################################
 
