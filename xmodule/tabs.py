@@ -8,7 +8,7 @@ from abc import ABCMeta
 
 from django.core.files.storage import get_storage_class
 from xblock.fields import List
-
+from django.conf import settings
 from edx_django_utils.plugins import PluginError
 
 log = logging.getLogger("edx.courseware")
@@ -264,7 +264,8 @@ class TabFragmentViewMixin:
         # If not, then use the generic course tab URL
         def link_func(course, reverse_func):
             """ Returns a function that returns the course tab's URL. """
-            return reverse_func("course_tab_view", args=[str(course.id), self.type])
+            mfe_link = f'{settings.LEARNING_MICROFRONTEND_URL}/course/{str(course.id)}/static/{self.url_slug}'
+            return mfe_link
 
         return link_func
 
