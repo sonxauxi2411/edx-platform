@@ -879,9 +879,9 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
     #     resume_button_urls.append(url)
     # # There must be enough urls for dashboard.html. Template creates course
     # # cards for "enrollments + entitlements".
-    context.update({
-        'resume_button_urls': ''
-    })
+    # context.update({
+    #     'resume_button_urls': ''
+    # })
     print('-----------------------------resume_button_urls--------------------------------------------')
     dashboard_template = 'dashboard.html'
     try:
