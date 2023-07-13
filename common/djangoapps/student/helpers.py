@@ -777,6 +777,7 @@ def get_resume_urls_for_enrollments(user, enrollments):
     for enrollment in enrollments:
         try:
             block_key = get_key_to_last_completed_block(user, enrollment.course_id)
+            print('--------------block_key:' , block_key)
             try:
                 block_data = get_course_blocks(user, block_key)
             except UsageKeyNotInBlockStructure:
