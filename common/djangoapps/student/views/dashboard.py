@@ -793,8 +793,8 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         'redirect_message': Text(redirect_message),
         'account_activation_messages': account_activation_messages,
         'activate_account_message': activate_account_message,
-        'course_enrollments': '',
-        'course_entitlements': '',
+        'course_enrollments': course_enrollments,
+        'course_entitlements': course_entitlements,
         'course_entitlement_available_sessions': course_entitlement_available_sessions,
         'unfulfilled_entitlement_pseudo_sessions': unfulfilled_entitlement_pseudo_sessions,
         'course_optouts': course_optouts,
@@ -841,6 +841,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         'country_code': country_code,
         # TODO: clean when experiment(Merchandise 2U LOBs - Dashboard) would be stop. [VAN-1097]
         'is_enterprise_user': is_enterprise_learner(user),
+        'resume_button_urls' : None
     }
     print('-----------------context---------------------')
     # Include enterprise learner portal metadata and messaging
