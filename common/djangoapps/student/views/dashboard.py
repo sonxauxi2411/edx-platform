@@ -892,7 +892,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         print('--------------------- context, dashboard_template------------------------------------')
     except DashboardRenderStarted.RenderInvalidDashboard as exc:
         response = render_to_response(exc.dashboard_template, exc.template_context)
-        print('----------------render_to_response(exc.dashboard_template, exc.template_context)------------------------')
+    
     except DashboardRenderStarted.RedirectToPage as exc:
         response = HttpResponseRedirect(exc.redirect_to or reverse('account_settings'))
     except DashboardRenderStarted.RenderCustomResponse as exc:
