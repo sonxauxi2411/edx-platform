@@ -841,7 +841,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         'country_code': country_code,
         # TODO: clean when experiment(Merchandise 2U LOBs - Dashboard) would be stop. [VAN-1097]
         'is_enterprise_user': is_enterprise_learner(user),
-        'resume_button_urls' : None
+        
     }
     print('-----------------context---------------------')
     # Include enterprise learner portal metadata and messaging
@@ -874,14 +874,14 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         })
     print('----------------------------ecommerce_service.is_enabled--------------------------------------')
     # Gather urls for course card resume buttons.
-    # resume_button_urls = ['' for entitlement in course_entitlements]
+    resume_button_urls = ['' for entitlement in course_entitlements]
     # for url in get_resume_urls_for_enrollments(user, course_enrollments).values():
     #     resume_button_urls.append(url)
     # # There must be enough urls for dashboard.html. Template creates course
     # # cards for "enrollments + entitlements".
-    # context.update({
-    #     'resume_button_urls': resume_button_urls
-    # })
+    context.update({
+        'resume_button_urls': resume_button_urls
+    })
     print('-----------------------------resume_button_urls--------------------------------------------')
     dashboard_template = 'dashboard.html'
     try:
