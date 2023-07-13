@@ -5,16 +5,7 @@ import six
 from django.utils.translation import gettext as _
 %>
 
-% if resume_button_url != '':
-  <a href="${resume_button_url}"
-      class="course-target-link enter-course ${'hidden' if is_unfulfilled_entitlement else ''}"
-      data-course-key="${enrollment.course_id}">
-    ${_('Resume Course')}
-    <span class="sr">
-      &nbsp;${course_overview.display_name_with_default}
-    </span>
-  </a>
-% else:
+
   <a href="${course_target}"
       class="course-target-link enter-course ${'hidden' if is_unfulfilled_entitlement else ''}"
       data-course-key="${enrollment.course_id}">
@@ -23,4 +14,4 @@ from django.utils.translation import gettext as _
       &nbsp;${course_overview.display_name_with_default}
     </span>
   </a>
-% endif
+
