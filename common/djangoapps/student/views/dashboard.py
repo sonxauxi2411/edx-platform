@@ -841,6 +841,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         'country_code': country_code,
         # TODO: clean when experiment(Merchandise 2U LOBs - Dashboard) would be stop. [VAN-1097]
         'is_enterprise_user': is_enterprise_learner(user),
+        
     }
 
     # Include enterprise learner portal metadata and messaging
@@ -865,6 +866,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
             user,
         )
     )
+
     if ecommerce_service.is_enabled(request.user):
         context.update({
             'use_ecommerce_payment_flow': True,
@@ -872,13 +874,17 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         })
 
     # Gather urls for course card resume buttons.
-    # resume_button_urls = ['' for entitlement in course_entitlements]
+
+   
+
     # for url in get_resume_urls_for_enrollments(user, course_enrollments).values():
     #     resume_button_urls.append(url)
     # # There must be enough urls for dashboard.html. Template creates course
     # # cards for "enrollments + entitlements".
     # context.update({
+
     #     'resume_button_urls': resume_button_urls
+
     # })
 
     dashboard_template = 'dashboard.html'
@@ -888,15 +894,17 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         context, dashboard_template = DashboardRenderStarted.run_filter(
             context=context, template_name=dashboard_template,
         )
+    
     except DashboardRenderStarted.RenderInvalidDashboard as exc:
         response = render_to_response(exc.dashboard_template, exc.template_context)
+    
     except DashboardRenderStarted.RedirectToPage as exc:
         response = HttpResponseRedirect(exc.redirect_to or reverse('account_settings'))
     except DashboardRenderStarted.RenderCustomResponse as exc:
         response = exc.response
     else:
         response = render_to_response(dashboard_template, context)
-
+   
     if show_account_activation_popup:
         response.delete_cookie(
             settings.SHOW_ACTIVATE_CTA_POPUP_COOKIE_NAME,
