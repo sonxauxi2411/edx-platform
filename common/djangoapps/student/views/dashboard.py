@@ -843,7 +843,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         'is_enterprise_user': is_enterprise_learner(user),
         
     }
-    print('-----------------context---------------------')
+
     # Include enterprise learner portal metadata and messaging
     enterprise_learner_portal_context = get_enterprise_learner_portal_context(request)
     context.update(enterprise_learner_portal_context)
@@ -854,7 +854,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         context
     )
     context.update(context_from_plugins)
-    print('--------------------context.update(context_from_plugins)----------------------------')
+
     notice_url = check_for_unacknowledged_notices(context)
     if notice_url:
         return redirect(notice_url)
@@ -866,13 +866,13 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
             user,
         )
     )
-    print('-------------------------------- get_experiment_user_metadata_context---------------------------')
+
     if ecommerce_service.is_enabled(request.user):
         context.update({
             'use_ecommerce_payment_flow': True,
             'ecommerce_payment_page': ecommerce_service.payment_page_url(),
         })
-    print('----------------------------ecommerce_service.is_enabled--------------------------------------')
+
     # Gather urls for course card resume buttons.
    
     # for url in get_resume_urls_for_enrollments(user, course_enrollments).values():
@@ -882,7 +882,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
     # context.update({
     #     'resume_button_urls': ''
     # })
-    print('-----------------------------resume_button_urls--------------------------------------------')
+
     dashboard_template = 'dashboard.html'
     try:
         # .. filter_implemented_name: DashboardRenderStarted
@@ -890,7 +890,7 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         context, dashboard_template = DashboardRenderStarted.run_filter(
             context=context, template_name=dashboard_template,
         )
-        print('--------------------- context, dashboard_template------------------------------------')
+    
     except DashboardRenderStarted.RenderInvalidDashboard as exc:
         response = render_to_response(exc.dashboard_template, exc.template_context)
     
@@ -900,12 +900,12 @@ def student_dashboard(request):  # lint-amnesty, pylint: disable=too-many-statem
         response = exc.response
     else:
         response = render_to_response(dashboard_template, context)
-        print('--------------------------render_to_response(dashboard_template, context)--------------------------------------------')
+   
     if show_account_activation_popup:
         response.delete_cookie(
             settings.SHOW_ACTIVATE_CTA_POPUP_COOKIE_NAME,
             domain=settings.SESSION_COOKIE_DOMAIN,
             path='/',
         )
-    print('-----------------------show_account_activation_popup--------------------------------')
+
     return response
