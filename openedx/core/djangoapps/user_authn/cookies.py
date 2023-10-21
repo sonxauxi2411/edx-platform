@@ -169,8 +169,8 @@ def set_logged_in_cookies(request, response, user):
         print('=======cookie_settings_subdomain==========', cookie_settings_subdomain)
         print('============cookie_settings==============',cookie_settings )
         accessToken = AccessToken.objects.filter(user_id=request.user.id).first()
-        response.set_cookie('accessToken' , accessToken , cookie_settings )
-        response.set_cookie('accessToken1' , accessToken , cookie_settings_subdomain )
+        response.set_cookie('accessToken' , accessToken ,  **cookie_settings )
+        response.set_cookie('accessToken1' , accessToken , **cookie_settings_subdomain )
 
     return response
 
