@@ -166,7 +166,8 @@ def set_logged_in_cookies(request, response, user):
         _set_deprecated_user_info_cookie(response, request, user, cookie_settings_subdomain)
         _create_and_set_jwt_cookies(response, request, cookie_settings_subdomain, user=user)
         CREATE_LOGON_COOKIE.send(sender=None, user=user, response=response)
-        
+        print('=======cookie_settings_subdomain==========', cookie_settings_subdomain)
+        print('============cookie_settings==============',cookie_settings )
         accessToken = AccessToken.objects.filter(user_id=request.user.id).first()
         response.set_cookie('accessToken' , accessToken , domain='.funix.edu.vn', httponly=False, secure=True  )
 
